@@ -11,22 +11,28 @@ void draw(){
   drawWindow();
   drawFuel();
   drawMilo();
-  drawSpeed();
+  
   
   theAccelerator.draw();
   if(mousePressed)
   {
     float X=mouseX;
     float Y=mouseY;
+    float speed=0;
+    float scale=0;
     if(X>280 && X<320 && Y>200 && Y<300)
     {
       
+      speed=(300-Y)*2;
+      drawSpeed(speed);
     }
+    
   }
   
 }
 void drawWindow()
 {
+  strokeWeight(1);
   fill(255);
   quad(50, 50, 650, 50, 600, 380,100, 380);
 
@@ -34,6 +40,7 @@ void drawWindow()
 }
 void drawFuel()
 {
+  strokeWeight(1);
   stroke(1);
   rect(70,60,80,30,10);
   fill(0);  
@@ -44,14 +51,15 @@ void drawFuel()
 }
 void drawMilo()
 {
-  
+  strokeWeight(1);
   stroke(1);
   fill(255);
   rect(170,60,80,30,10);
 }
 
-void drawSpeed()
+void drawSpeed(float Speed)
 {
+  strokeWeight(1);
   stroke(2);
   ellipse(140, 340, 140, 140);
   stroke(1);
@@ -70,8 +78,15 @@ void drawSpeed()
   float y3 = sin(radians(angle)) * (radius-16);
   line(140+x1,340+ y1, 140+x2,340+ y2);
   fill(0);
-  textSize(4);
+  textSize(5);
   text(counter,140+x3,340+ y3);
    counter=counter+10;
 }
+  
+  float pos=map(Speed,0,200,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  println(pos);
+  noFill();
+  stroke(255,0,0);
+  strokeWeight(5);
+   arc(140, 340, 135, 135, HALF_PI+QUARTER_PI, pos );
 }
