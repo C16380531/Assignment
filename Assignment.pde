@@ -4,22 +4,22 @@ void setup()
 {
   size(700, 400);
   theAccelerator  =  new  Accelerator();
-  
 }
+float speed=0;
+float fuel=100;
+float Miles=0;
 void draw(){
   background(1);
   drawWindow();
-  drawFuel();
-  drawMilo();
-  
-  
+  drawFuel(fuel);
+  drawMilo(Miles);
+  drawSpeed(speed);
+  println(speed);
   theAccelerator.draw();
   if(mousePressed)
   {
     float X=mouseX;
     float Y=mouseY;
-    float speed=0;
-    float scale=0;
     if(X>280 && X<320 && Y>200 && Y<300)
     {
       
@@ -29,6 +29,21 @@ void draw(){
     
   }
   
+  if(speed!=0 && fuel>0)
+  {
+    println(fuel);
+    Miles=Miles+speed/21600;//for purpose of demonstration 216,000 has been shortened to 21,600
+    fuel=fuel-((speed/21600)*30);//33 miles to the 
+    
+  }
+  if(Miles==100000)
+  {
+    Miles=0; //ensure number doesn't leave milometer
+  }
+  if(fuel==0)
+  {
+    //promt refuel
+  }
 }
 void drawWindow()
 {
@@ -38,7 +53,7 @@ void drawWindow()
 
   
 }
-void drawFuel()
+void drawFuel(float fuel)
 {
   strokeWeight(1);
   stroke(1);
@@ -48,17 +63,36 @@ void drawFuel()
   text("F", 135, 102);
   line(80,60,80,90);
   line(135,60,135,90);
+  
+  float Fuel= map(fuel,0,100,0,80);
+  if(Fuel>30)
+  {
+    fill(0,255,0);
+    rect(70,60,Fuel,30,10);
+  }
+  else if(Fuel>0)
+  {
+    fill(255,0,0);
+    rect(70,60,Fuel,30,10);
+  }
+  
 }
-void drawMilo()
+void drawMilo(float Miles)
 {
   strokeWeight(1);
   stroke(1);
   fill(255);
   rect(170,60,80,30,10);
+  fill(0);
+  textSize(15);
+  textAlign(CENTER);
+  int miles=int(Miles);
+  text(miles,210,82.5);
 }
 
 void drawSpeed(float Speed)
 {
+  fill(255);
   strokeWeight(1);
   stroke(2);
   ellipse(140, 340, 140, 140);
@@ -84,7 +118,6 @@ void drawSpeed(float Speed)
 }
   
   float pos=map(Speed,0,200,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
-  println(pos);
   noFill();
   stroke(255,0,0);
   strokeWeight(5);
