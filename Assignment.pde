@@ -1,11 +1,26 @@
+import processing.sound.*;
+
+
 Accelerator  theAccelerator; 
 Brake  theBrake; 
+
+SoundFile Driving;
+SoundFile Start;
+
+PImage Gauge;
+PImage Background;
 
 void setup()
 {
   size(700, 400);
   theAccelerator  =  new  Accelerator();
   theBrake  =  new  Brake();
+  Start = new SoundFile(this, "CarStart.mp3");
+  Start.play();
+  
+  Gauge = loadImage("gauge.png");
+  Background = loadImage("road2.jpg");
+  
 }
 float speed=0;
 float fuel=100;
@@ -16,14 +31,13 @@ void draw(){
   drawFuel(fuel);
   drawMilo(Miles);
   drawSpeed(speed);
-  println(speed);
   theAccelerator.draw();
   theBrake.draw();
   if(mousePressed)
   {
     float X=mouseX;
     float Y=mouseY;
-    if(X>500 && X<540 && Y>260 && Y<360 && fuel>0)
+    if(X>600 && X<640 && Y>260 && Y<360 && fuel>0)
     {
       if((360-Y)*2>speed)
       {
@@ -31,7 +45,7 @@ void draw(){
         drawSpeed(speed);
       }
     }
-    if(X>400 && X<480 && Y>310 && Y<360 )
+    if(X>500 && X<580 && Y>310 && Y<360 )
     {
       if((Y-310)*4<speed)
       {
@@ -44,7 +58,7 @@ void draw(){
   
   if(speed!=0 && fuel>0)
   {
-    println(fuel);
+    
     Miles=Miles+speed/21600;//for purpose of demonstration 216,000 has been shortened to 21,600
     fuel=fuel-((speed/21600)*30);//33 miles to the 
     
@@ -53,8 +67,10 @@ void draw(){
   {
     Miles=0; //ensure number doesn't leave milometer
   }
-  if(fuel==0)
+  if(fuel<0 && speed>0)
   {
+    speed=speed-1;
+    drawSpeed(speed);
     //promt refuel
     //deaccelerate to 0
   }
@@ -62,8 +78,10 @@ void draw(){
 void drawWindow()
 {
   strokeWeight(1);
+  stroke(1);
   fill(255);
   quad(50, 50, 650, 50, 600, 380,100, 380);
+  image(Background,50,50,600,330);
 
   
 }
@@ -79,13 +97,16 @@ void drawFuel(float fuel)
   line(80,60,80,90);
   line(135,60,135,90);
   
+  image(Gauge,97,95,20,20);
+
+    
   float Fuel= map(fuel,0,100,0,80);
   if(Fuel>30)
   {
     fill(0,255,0);
     rect(70,60,Fuel,30,10);
   }
-  else if(Fuel>0)
+  else if(Fuel>2)
   {
     fill(255,0,0);
     rect(70,60,Fuel,30,10);
@@ -99,6 +120,7 @@ void drawMilo(float Miles)
   fill(255);
   rect(170,60,80,30,10);
   fill(0);
+  text("Miles",210,102);
   textSize(15);
   textAlign(CENTER);
   int miles=int(Miles);
