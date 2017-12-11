@@ -3,6 +3,7 @@ import processing.sound.*;
 
 Accelerator  theAccelerator; 
 Brake  theBrake; 
+Line theLine;
 
 SoundFile Driving;
 SoundFile Start;
@@ -15,9 +16,11 @@ void setup()
   size(700, 400);
   theAccelerator  =  new  Accelerator();
   theBrake  =  new  Brake();
+  theLine= new Line();
   Start = new SoundFile(this, "CarStart.mp3");
+  Driving= new SoundFile(this, "CarDriving.mp3");
   Start.play();
-  
+  Driving.loop();
   Gauge = loadImage("gauge.png");
   Background = loadImage("road2.jpg");
   
@@ -33,6 +36,8 @@ void draw(){
   drawSpeed(speed);
   theAccelerator.draw();
   theBrake.draw();
+  theLine.draw();
+  theLine.move(speed);
   if(mousePressed)
   {
     float X=mouseX;
