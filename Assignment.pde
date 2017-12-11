@@ -165,33 +165,36 @@ void drawSpeed(float Speed)
   fill(1);
   strokeWeight(1);
   stroke(255);
-  ellipse(140, 340, 140, 140);
+  ellipse(190, 340, 120, 120);
+  
   stroke(255);
-  arc(140, 340, 130, 130, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  arc(190, 340, 110, 110, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
   float points = 20; //number of points
   float pointAngle = 270/points; //angle between points
   float pointAngle2= radians(pointAngle);
-  int radius = 65;
+  int radius = 55;
   int counter=0;
   for(float angle = 135; angle <= 405; angle = angle+pointAngle) { 
   float x1 = cos(radians(angle)) * radius; 
   float y1 = sin(radians(angle)) * radius;
-  float x2 = cos(radians(angle)) * (radius-10); 
-  float y2 = sin(radians(angle)) * (radius-10);
-  float x3 = cos(radians(angle)) * (radius-16); 
-  float y3 = sin(radians(angle)) * (radius-16);
-  line(140+x1,340+ y1, 140+x2,340+ y2);
+  float x2 = cos(radians(angle)) * (radius-8); 
+  float y2 = sin(radians(angle)) * (radius-8);
+  float x3 = cos(radians(angle)) * (radius-13); 
+  float y3 = sin(radians(angle)) * (radius-13);
+  line(190+x1,340+ y1, 190+x2,340+ y2);
   fill(255);
   textSize(5);
-  text(counter,140+x3,340+ y3);
+  text(counter,190+x3,340+ y3);
+  textSize(8);
+  text("MPH",190,340);
    counter=counter+10;
 }
   
   float pos=map(Speed,0,200,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
   noFill();
   stroke(255,0,0);
-  strokeWeight(5);
-   arc(140, 340, 135, 135, HALF_PI+QUARTER_PI, pos );
+  strokeWeight(3);
+   arc(190, 340, 115, 115, HALF_PI+QUARTER_PI, pos );
 }
 
 void drawRPM(float Speed)
@@ -199,13 +202,13 @@ void drawRPM(float Speed)
   fill(1);
   strokeWeight(1);
   stroke(255);
-  ellipse(80, 340, 140, 140);
+  ellipse(70, 340, 120, 120);
   stroke(255);
-  arc(80, 340, 130, 130, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  arc(70, 340, 110, 110, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
   float points = 24; //number of points
   float pointAngle = 270/points; //angle between points
   float pointAngle2= radians(pointAngle);
-  int radius = 65;
+  int radius = 55;
   
   int counter2=0;
   int counter=0;
@@ -221,22 +224,24 @@ void drawRPM(float Speed)
   
   if(counter%3==0)
   {
-    line(80+x1,340+ y1, 80+x4,340+ y4);
-    text(counter2,80+x3,340+ y3);
+    line(70+x1,340+ y1, 70+x4,340+ y4);
+    textSize(5);
+    text(counter2,70+x3,340+ y3);
     println(counter2);
     counter2=counter2+1;
   }else
   {
-    line(80+x1,340+ y1, 80+x2,340+ y2);
+    line(70+x1,340+ y1, 70+x2,340+ y2);
   }
   fill(255);
-  textSize(5);
+  textSize(8);
+  text("rpmx 1000",70,340);
   counter=counter+1;
 }
   
-  float pos=map(Speed,0,200,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  float pos=map(Speed,0,400,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
   noFill();
   stroke(255,0,0);
-  strokeWeight(5);
-   arc(80, 340, 135, 135, HALF_PI+QUARTER_PI, pos );
+  strokeWeight(3);
+   arc(70, 340, 115, 115, HALF_PI+QUARTER_PI, pos );
 }
