@@ -1,9 +1,11 @@
 Accelerator  theAccelerator; 
+Brake  theBrake; 
 
 void setup()
 {
   size(700, 400);
   theAccelerator  =  new  Accelerator();
+  theBrake  =  new  Brake();
 }
 float speed=0;
 float fuel=100;
@@ -16,15 +18,26 @@ void draw(){
   drawSpeed(speed);
   println(speed);
   theAccelerator.draw();
+  theBrake.draw();
   if(mousePressed)
   {
     float X=mouseX;
     float Y=mouseY;
-    if(X>280 && X<320 && Y>200 && Y<300)
+    if(X>500 && X<540 && Y>260 && Y<360 && fuel>0)
     {
-      
-      speed=(300-Y)*2;
-      drawSpeed(speed);
+      if((360-Y)*2>speed)
+      {
+        speed=(360-Y)*2;
+        drawSpeed(speed);
+      }
+    }
+    if(X>400 && X<480 && Y>310 && Y<360 )
+    {
+      if((Y-310)*4<speed)
+      {
+        speed=(Y-310)*4;
+        drawSpeed(speed);
+      }
     }
     
   }
@@ -43,6 +56,7 @@ void draw(){
   if(fuel==0)
   {
     //promt refuel
+    //deaccelerate to 0
   }
 }
 void drawWindow()
@@ -58,7 +72,8 @@ void drawFuel(float fuel)
   strokeWeight(1);
   stroke(1);
   rect(70,60,80,30,10);
-  fill(0);  
+  fill(0);
+  textSize(10);
   text("E", 80, 102);
   text("F", 135, 102);
   line(80,60,80,90);
@@ -92,11 +107,11 @@ void drawMilo(float Miles)
 
 void drawSpeed(float Speed)
 {
-  fill(255);
+  fill(1);
   strokeWeight(1);
-  stroke(2);
+  stroke(255);
   ellipse(140, 340, 140, 140);
-  stroke(1);
+  stroke(255);
   arc(140, 340, 130, 130, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
   float points = 20; //number of points
   float pointAngle = 270/points; //angle between points
@@ -111,7 +126,7 @@ void drawSpeed(float Speed)
   float x3 = cos(radians(angle)) * (radius-16); 
   float y3 = sin(radians(angle)) * (radius-16);
   line(140+x1,340+ y1, 140+x2,340+ y2);
-  fill(0);
+  fill(255);
   textSize(5);
   text(counter,140+x3,340+ y3);
    counter=counter+10;
