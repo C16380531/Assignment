@@ -44,19 +44,27 @@ void draw(){
     float Y=mouseY;
     if(X>600 && X<640 && Y>260 && Y<360 && fuel>0)
     {
-      if((360-Y)*2>speed)
-      {
-        speed=(360-Y)*2;
+        if(speed<=190)
+        {
+        speed=speed+10;
+        }else{
+          speed=200;
+        }
+        
         drawSpeed(speed);
-      }
+      
     }
     if(X>500 && X<580 && Y>310 && Y<360 )
     {
-      if((Y-310)*4<speed)
-      {
-        speed=(Y-310)*4;
+      
+        if(speed>=10)
+        {
+        speed=speed-10;
+        }else{
+          speed=0;
+        }
         drawSpeed(speed);
-      }
+      
     }
     
   }
@@ -76,8 +84,26 @@ void draw(){
   {
     speed=speed-1;
     drawSpeed(speed);
-    //promt refuel
-    //deaccelerate to 0
+  }
+  if(fuel<0)
+  {
+    fill(192,192,192);
+    stroke(1);
+    rect(250,200,200,100);
+    fill(255,0,0);
+    textSize(20);
+    textAlign(CENTER);
+    text("Refuel Car",350,250);
+    
+    if(mousePressed)
+  {
+    float X=mouseX;
+    float Y=mouseY;
+    if(X>250 && X<450 && Y>200 && Y<300)
+    {
+        fuel=100;
+    }
+  }
   }
 }
 void drawWindow()
