@@ -18,12 +18,11 @@ void setup()
   theBrake  =  new  Brake();
   theLine= new Line();
   Start = new SoundFile(this, "CarStart.mp3");
-  Driving= new SoundFile(this, "CarDriving.mp3");
+  Driving= new SoundFile(this, "CarDriving.wav");
   Start.play();
-  Driving.loop();
   Gauge = loadImage("gauge.png");
   Background = loadImage("road2.jpg");
-  
+  Driving.loop();
 }
 float speed=0;
 float fuel=100;
@@ -34,6 +33,7 @@ void draw(){
   drawFuel(fuel);
   drawMilo(Miles);
   drawSpeed(speed);
+  drawRPM(speed);
   theAccelerator.draw();
   theBrake.draw();
   theLine.draw();
@@ -73,18 +73,20 @@ void draw(){
   {
     
     Miles=Miles+speed/21600;//for purpose of demonstration 216,000 has been shortened to 21,600
-    fuel=fuel-((speed/21600)*30);//33 miles to the 
-    
+    fuel=fuel-((speed/21600)*30);//33 miles to the  
   }
+  
   if(Miles==100000)
   {
     Miles=0; //ensure number doesn't leave milometer
   }
+  
   if(fuel<0 && speed>0)
   {
     speed=speed-1;
     drawSpeed(speed);
   }
+  
   if(fuel<0)
   {
     fill(192,192,192);
@@ -96,14 +98,14 @@ void draw(){
     text("Refuel Car",350,250);
     
     if(mousePressed)
-  {
-    float X=mouseX;
-    float Y=mouseY;
-    if(X>250 && X<450 && Y>200 && Y<300)
     {
-        fuel=100;
+      float X=mouseX;
+      float Y=mouseY;
+      if(X>250 && X<450 && Y>200 && Y<300)
+      {
+          fuel=100;
+      }
     }
-  }
   }
 }
 void drawWindow()
@@ -190,4 +192,51 @@ void drawSpeed(float Speed)
   stroke(255,0,0);
   strokeWeight(5);
    arc(140, 340, 135, 135, HALF_PI+QUARTER_PI, pos );
+}
+
+void drawRPM(float Speed)
+{
+  fill(1);
+  strokeWeight(1);
+  stroke(255);
+  ellipse(80, 340, 140, 140);
+  stroke(255);
+  arc(80, 340, 130, 130, HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  float points = 24; //number of points
+  float pointAngle = 270/points; //angle between points
+  float pointAngle2= radians(pointAngle);
+  int radius = 65;
+  
+  int counter2=0;
+  int counter=0;
+  for(float angle = 135; angle <= 405; angle = angle+pointAngle) { 
+  float x1 = cos(radians(angle)) * radius; 
+  float y1 = sin(radians(angle)) * radius;
+  float x2 = cos(radians(angle)) * (radius-2); 
+  float y2 = sin(radians(angle)) * (radius-2);
+  float x4 = cos(radians(angle)) * (radius-12); 
+  float y4 = sin(radians(angle)) * (radius-12);
+  float x3 = cos(radians(angle)) * (radius-16); 
+  float y3 = sin(radians(angle)) * (radius-16);
+  
+  if(counter%3==0)
+  {
+    line(80+x1,340+ y1, 80+x4,340+ y4);
+    text(counter2,80+x3,340+ y3);
+    println(counter2);
+    counter2=counter2+1;
+  }else
+  {
+    line(80+x1,340+ y1, 80+x2,340+ y2);
+  }
+  fill(255);
+  textSize(5);
+  counter=counter+1;
+}
+  
+  float pos=map(Speed,0,200,HALF_PI+QUARTER_PI, TWO_PI+QUARTER_PI );
+  noFill();
+  stroke(255,0,0);
+  strokeWeight(5);
+   arc(80, 340, 135, 135, HALF_PI+QUARTER_PI, pos );
 }
