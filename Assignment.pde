@@ -33,17 +33,20 @@ float EngineTemp=0;
 void draw()
 {
   background(1);
-  drawWindow();
-  drawFuel(fuel);
-  drawMilo(Miles);
-  drawSpeed(speed);
-  drawRPM(speed);
-  drawTemp(EngineTemp);
-  drawButton();
-  theAccelerator.draw();
-  theBrake.draw();
-  theLine.draw();
-  theLine.move(speed);
+  
+    drawWindow();
+    drawFuel(fuel);
+    drawMilo(Miles);
+    drawSpeed(speed);
+    drawRPM(speed);
+    drawTemp(EngineTemp);
+    theAccelerator.draw();
+    theBrake.draw();
+    theLine.draw();
+    theLine.move(speed);
+
+  
+  
   if(mousePressed)
   {
     float X=mouseX;
@@ -77,14 +80,13 @@ void draw()
         drawSpeed(speed);
       
     }
-    
   }
   
   if(speed!=0 && fuel>0)
   {
     
-    Miles=Miles+speed/21600;//for purpose of demonstration 216,000 has been shortened to 21,600
-    fuel=fuel-((speed/21600)*30);//33 miles to the  
+    Miles=Miles+speed/3600;//for purpose of demonstration 216,000 has been shortened to 21,600
+    fuel=fuel-((speed/3600)*10);//33 miles to the  
   }
   
   if(Miles==100000)
@@ -258,7 +260,7 @@ void drawRPM(float Speed)
       line(70+x1,340+ y1, 70+x4,340+ y4);
       textSize(5);
       text(counter2,70+x3,340+ y3);
-      println(counter2);
+      
       counter2=counter2+1;
     }
     else
@@ -326,13 +328,4 @@ void drawTemp(float EngineTemp)
   stroke(255,0,0);
   strokeWeight(3);
    line(60, 220, 60+x4, 220+y4);
-}
-
-void drawButton()
-{
-  stroke(1);
-  fill(192,192,192);
-  rect(600,50,50,50);
-  image(Button,605,55,40,40);
-  
 }
