@@ -92,8 +92,9 @@ void draw()
   if(fuel<0 && speed>0)
   {
     speed=speed-1;
-    EngineTemp=EngineTemp-5;
+    EngineTemp=EngineTemp-0.5;
     drawSpeed(speed);
+    
   }
   
   if(fuel<0)
@@ -121,11 +122,13 @@ void draw()
   {
     fill(192,192,192);
     stroke(1);
-    rect(250,200,200,100);
+    rect(240,200,220,100);
     fill(255,0,0);
     textSize(20);
     textAlign(CENTER);
     text("Engine Overheating",350,250);
+    textSize(10);
+    text("please brake to restore engine temperatures",350,270);
   }
   
 }
@@ -275,10 +278,10 @@ void drawTemp(float EngineTemp)
   fill(1);
   strokeWeight(1);
   stroke(255);
-  ellipse(310, 90, 80, 80);
+  ellipse(60, 220, 80, 80);
   
   stroke(255);
-  arc(310, 90, 70, 70, PI+QUARTER_PI, TWO_PI-QUARTER_PI );
+  arc(60, 220, 70, 70, PI+QUARTER_PI, TWO_PI-QUARTER_PI );
   float points = 5; //number of points
   float pointAngle = 90/points; //angle between points
   float pointAngle2= radians(pointAngle);
@@ -292,21 +295,22 @@ void drawTemp(float EngineTemp)
     float y2 = sin(radians(angle)) * (radius-8);
     float x3 = cos(radians(angle)) * (radius-13); 
     float y3 = sin(radians(angle)) * (radius-13);
-    line(310+x1,90+ y1, 310+x2,90+ y2);
+    line(60+x1,220+ y1, 60+x2,220+ y2);
     fill(255);
     textSize(5);
     if(counter==0)
     {
       textSize(5);
-      text("c",310+x3,90+ y3);
+      text("c",60+x3,220+ y3);
     }
     else if(counter==5)
     {
       textSize(5);
-      text("h",310+x3,90+ y3);
+      text("h",60+x3,220+ y3);
     }
     textSize(8);
-    text("Temp",310,100);
+    textAlign(CENTER);
+    text("Temp",60,230);
     counter=counter+1;
   }
 
@@ -316,5 +320,5 @@ void drawTemp(float EngineTemp)
   noFill();
   stroke(255,0,0);
   strokeWeight(3);
-   line(310, 90, 310+x4, 90+y4);
+   line(60, 220, 60+x4, 220+y4);
 }
