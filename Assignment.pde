@@ -10,6 +10,7 @@ SoundFile Start;
 
 PImage Gauge;
 PImage Background;
+PImage Button;
 
 void setup()
 {
@@ -22,6 +23,7 @@ void setup()
   Start.play();
   Gauge = loadImage("gauge.png");
   Background = loadImage("road2.jpg");
+  Button = loadImage("Button.png");
   Driving.loop();
 }
 float speed=0;
@@ -37,6 +39,7 @@ void draw()
   drawSpeed(speed);
   drawRPM(speed);
   drawTemp(EngineTemp);
+  drawButton();
   theAccelerator.draw();
   theBrake.draw();
   theLine.draw();
@@ -106,6 +109,8 @@ void draw()
     textSize(20);
     textAlign(CENTER);
     text("Refuel Car",350,250);
+    textSize(10);
+    text("please click to fuel engine",350,270);
     
     if(mousePressed)
     {
@@ -321,4 +326,13 @@ void drawTemp(float EngineTemp)
   stroke(255,0,0);
   strokeWeight(3);
    line(60, 220, 60+x4, 220+y4);
+}
+
+void drawButton()
+{
+  stroke(1);
+  fill(192,192,192);
+  rect(600,50,50,50);
+  image(Button,605,55,40,40);
+  
 }
